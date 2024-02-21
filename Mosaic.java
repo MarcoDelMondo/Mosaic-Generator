@@ -6,16 +6,19 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 public class Mosaic {
-	// sizes for image scaling
-	private static final int tileWidth = 24;
-	private static final int tileHeight = 24;
-	private static final int tileScale = 12;
-	private static int scaledHeight = tileHeight / tileScale;
-	private static int scaledWidth = tileWidth / tileScale;
-	public static Pixel[][] pixels = new Pixel[scaledWidth][scaledHeight];
+
+	// Constants for image scaling
+	private static final int TILE_WIDTH = 24;
+	private static final int TILE_HEIGHT = 24;
+	private static final int TILE_SCALE = 12;
+	private static final int SCALED_HEIGHT = TILE_HEIGHT / TILE_SCALE;
+	private static final int SCALED_WIDTH = TILE_WIDTH / TILE_SCALE;
+
+	// 2D array for storing pixels
+	public static Pixel[][] pixels = new Pixel[SCALED_WIDTH][SCALED_HEIGHT];
 	private static final String outputImg = "source/output/output.jpg";
 
-	// method for easy printing
+	// Method for easy printing
 	private static void log(String msg) {
 		System.out.println(msg);
 	}
@@ -42,19 +45,19 @@ public class Mosaic {
 		log("Finshed");
 	}
 
-	// writes outputImage
+	// Writes outputImage
 	private static BufferedImage outputImage(int width, int height, Collection<BufferedImageSec> sections) {
-		BufferedImage image = new BufferedImage(width * tileScale, height * tileScale, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(width * TILE_SCALE, height * TILE_SCALE, BufferedImage.TYPE_3BYTE_BGR);
 
 		for (BufferedImageSec sec : sections) {
-			BufferedImage section = image.getSubimage(sec.x * tileScale, sec.y * tileScale, tileHeight, tileWidth);
+			BufferedImage section = image.getSubimage(sec.x * TILE_SCALE, sec.y * TILE_SCALE, TILE_HEIGHT, TILE_WIDTH);
 			section.setData(sec.image.getData());
 		}
 
 		return image;
 	}
 
-	// segregates image into sections
+	// Segregates image into sections
 	public static class BufferedImageSec {
 		public BufferedImage image;
 		public int x;
@@ -84,7 +87,7 @@ public class Mosaic {
 		}
 	}
 
-	// adds sections to a collection
+	// Adds sections to a collection
 	private static Collection<BufferedImageSec> getImagesFromInput(File inputImgFile) throws IOException {
 		Collection<BufferedImageSec> parts = new HashSet<BufferedImageSec>();
 
@@ -94,8 +97,8 @@ public class Mosaic {
 
 		int x = 0;
 		int y = 0;
-		int w = scaledWidth;
-		int h = scaledHeight;
+		int w = SCALED_WIDTH;
+		int h = SCALED_HEIGHT;
 		while (x + w <= totalWidth) {
 			while (y + h <= totalHeight) {
 				BufferedImage inputImagePart = inputImage.getSubimage(x, y, w, h);
@@ -109,10 +112,8 @@ public class Mosaic {
 		return parts;
 	}
 
-	// This method takes in a directory, which it will read in all the tile images
-	// from.
-	// It returns an ArrayList of type Tile, so that it has the file and the average
-	// colors for that image.
+	// This method takes in a directory, from which it will read in all the tile images.
+	// It returns an ArrayList of type Tile, so that it has the file and the average colors for that image.
 	private static ArrayList<Tile> getImagesFromTiles(File tilesDir) throws IOException {
 		ArrayList<Tile> tileImages = new ArrayList<Tile>();
 		File[] files = tilesDir.listFiles();
@@ -161,27 +162,21 @@ public class Mosaic {
 		return bestMatch;
 	}
 
-//A tile class to handle a single tile, with constructor calculating the average colors of the tile image
+// A tile class to handle a single tile, with constructor calculating the average colors of the tile image
 	public static class Tile {
 		public int averageRed;
 		public int averageGreen;
 		public int averageBlue;
 		public BufferedImage image;
-		public static int tileWidth = 24;
-		public static int tileHeight = 24;
-		public static int tileScale = 8;
-		private static int scaledHeight = tileHeight / tileScale;
-		private static int scaledWidth = tileWidth / tileScale;
-		public Pixel[][] pixels = new Pixel[scaledWidth][scaledHeight];
+		public Pixel[][] pixels = new Pixel[SCALED_WIDTH][SCALED_HEIGHT];
 
-		// Constructor receives an image, and calculates it's average
+		// Constructor receives an image, and calculates its average
 		public Tile(BufferedImage i) {
 			image = i;
 			calculateAverage();
 		}
 
-		// Calculate the average RGB for the local image
-		// local variables are updated, nothing is returned.
+		// Calculate the average RGB for the local image, local variables are updated, nothing is returned.
 		private void calculateAverage() {
 			int width = image.getWidth();
 			int height = image.getHeight();

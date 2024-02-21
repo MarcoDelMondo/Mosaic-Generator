@@ -1,6 +1,19 @@
 # Mosaic-Generator
-Takes a base image and turns it into a mosaic using smaller images by matching average rgb values of pixels and tile images
-Must use a source folder in project file that contains subfolder base, jpg, and output
-base will contain "base.jpg" a.k.a the starting image you wish to transform
-jpg will contain the tile images you wish to use to create the mosaic i've attached a zip folder of the images i used
-output will write the output file named "output.jpg"
+
+This Java program will take an input image and generate a Mosaic using tile images provided in jpg.zip. The zip file will need to be extracted before use. 
+
+# How it Works
+1. **Reading Tiles:** The program reads the set of tile images from the "sources/jpg" directory and calculates their average rgb values for placement in the Mosaic.
+2. **Reading Base Image:** The base image is read from the "source/base/base.jpg" file. This will be the file you provide that you wish to turn into a Mosaic.
+3. **Matching Tiles:** Tiles are matched to sections of the base image to create the Mosaic image. The program will calculate the average rgb value for each tile of the base image and match it to the appropriate tile from the "sources/jpg" directory.
+4. **Creating Output Image:** The output Mosaic image is written to the "source/output" directory as "output.jpg"
+
+## Configuration
+
+- **Tile Images:** Extract the jpg.zip folder in the "source/jpg" directory. If you would like to use your own images for the tiles, you can ignore this step and simply place the images you wish to use as tiles here.
+- **Base Image:** Provide the base image you wish to turn into a Mosaic in the "source/base" directory with the file name "base.jpg".
+- **Output Image:** The output image will be written to the "source/output" directory as "output.jpg".
+
+## Dependencies
+
+- Java Runtime Environment (JRE)
