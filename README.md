@@ -2,7 +2,7 @@
 
 This Java program will take an input image and generate a Mosaic using tile images provided in jpg.zip. The zip file will need to be extracted before use. 
 
-# How it Works
+## How it Works
 1. **Reading Tiles:** The program reads the set of tile images from the "sources/jpg" directory and calculates their average rgb values for placement in the Mosaic.
 2. **Reading Base Image:** The base image is read from the "source/base/base.jpg" file. This will be the file you provide that you wish to turn into a Mosaic.
 3. **Matching Tiles:** Tiles are matched to sections of the base image to create the Mosaic image. The program will calculate the average rgb value for each tile of the base image and match it to the appropriate tile from the "sources/jpg" directory.
